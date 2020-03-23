@@ -1,6 +1,9 @@
 # JFrog Artifactory Chart Changelog
 All changes to this chart will be documented in this file.
 
+## [9.0.30] - Mar 23, 2020
+* Use `postgresqlExtendedConf` for setting custom PostgreSQL configuration (instead of `postgresqlConfiguration`)
+
 ## [9.0.29] - Mar 20, 2020
 * Add support for masterKey trim during 6.x to 7.x migration if 6.x masterKey is 32 hex (64 characters)
 

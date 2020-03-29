@@ -20,20 +20,29 @@ artifactory:
 
     ## Uncomment the following resources definitions or pass them from command line
     ## to control the cpu and memory resources allocated by the Kubernetes cluster
-    resources: {}
-    #  requests:
-    #    memory: "1Gi"
-    #    cpu: "500m"
-    #  limits:
-    #    memory: "4Gi"
-    #    cpu: "1"
+    resources: 
+      requests:
+        memory: "1Gi"
+        cpu: "500m"
+      limits:
+        memory: "4Gi"
+        cpu: "2"
     ## The following Java options are passed to the java process running Artifactory.
     ## You should set them according to the resources set above.
     ## IMPORTANT: Make sure resources.limits.memory is at least 1G more than Xmx.
-    javaOpts: {}
-     # xms: "1g"
-     # xmx: "3g"
-     # other: ""
+    javaOpts: 
+      xms: "1g"
+      xmx: "3g"
+      other: ""  
+
+    service:
+      type: LoadBalancer
+      annotations:
+        avi_proxy: '{
+        "virtualservice": {"east_west_placement": false,
+        "vrf_context_ref": "/api/vrfcontext?name=VRF-WDC-TKGDEV-1",
+        "se_group_ref": "/api/serviceenginegroup?name=SEG-WDC-TKGDEV-1"}, "pool": {
+        "vrf_ref": "/api/vrfcontext?name=VRF-WDC-TKGDEV-1"}}'      
 
   installer:
     platform: art-oss-helm
@@ -41,10 +50,16 @@ artifactory:
   ## Nginx
   ## See full list of supported Nginx options and documentation in artifactory chart: https://github.com/jfrog/charts/tree/master/stable/artifactory
   nginx:
-    enabled: true
+    enabled: false
     tlsSecretName: ""
     service:
       type: LoadBalancer
+      annotations:
+        avi_proxy: '{
+        "virtualservice": {"east_west_placement": false,
+        "vrf_context_ref": "/api/vrfcontext?name=VRF-WDC-TKGDEV-1",
+        "se_group_ref": "/api/serviceenginegroup?name=SEG-WDC-TKGDEV-1"}, "pool": {
+        "vrf_ref": "/api/vrfcontext?name=VRF-WDC-TKGDEV-1"}}'   
 
   ## Ingress
   ## See full list of supported Ingress options and documentation in artifactory chart: https://github.com/jfrog/charts/tree/master/stable/artifactory
@@ -57,7 +72,7 @@ artifactory:
   ## Configuration values for the PostgreSQL dependency sub-chart
   ## ref: https://github.com/kubernetes/charts/blob/master/stable/postgresql/README.md
   postgresql:
-    enabled: true
+    enabled: false
 
   ## This key is required for upgrades to protect old PostgreSQL chart's breaking changes.
   databaseUpgradeReady: "yes"
@@ -70,4 +85,4 @@ artifactory:
 
 ## Enable the PostgreSQL sub chart
 postgresql:
-  enabled: true
+  enabled: false

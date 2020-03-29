@@ -28,7 +28,7 @@ To install the chart with the release name `artifactory-oss`:
 helm install --name artifactory-oss --set postgresql.postgresqlPassword=<postgres_password> jfrog/artifactory-oss
 ```
 ### Install plain artifactory-oss, service exposed as NodePort
-helm install artifactory-oss \
+```helm install artifactory-oss \
   --set artifactory.nginx.enabled=false \
   --set artifactory.postgresql.enabled=false \
   --set postgresql.enabled=false \
@@ -39,7 +39,7 @@ helm install artifactory-oss \
   --set artifactory.artifactory.resources.limits.memory="4Gi" \
   --set artifactory.artifactory.javaOpts.xms="1g" \
   --set artifactory.artifactory.javaOpts.xmx="3g" \
-  jfrog/artifactory-oss -n <YOUR_NAME_SPACE>
+  jfrog/artifactory-oss -n <YOUR_NAME_SPACE>```
 
 ### Accessing Artifactory OSS
 **NOTE:** If using artifactory or nginx service type `LoadBalancer`, it might take a few minutes for Artifactory OSS's public IP to become available.
